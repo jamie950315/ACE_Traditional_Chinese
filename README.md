@@ -40,10 +40,11 @@ pip install aiofiles numpy opencc-python-reimplemented
    `C:\Program Files (x86)\Steam\steamapps\common\Assetto Corsa EVO\`
 
 3. **執行工具：**  
-   在命令提示字元中進入工具所在資料夾後執行：
+   在命令提示字元中先切換到遊戲安裝目錄（需與 `content.kspkg` 同層）後執行：
    ```bash
    python ACE_Traditional_Chinese.py
    ```
+   程式會使用「目前工作目錄」作為解包與轉換路徑，不需修改程式內的絕對路徑。
 
 4. **工具流程：**  
    - 程式會自動解析並解密 `content.kspkg` 的檔案表。
@@ -96,4 +97,3 @@ THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLI
 ## 聯絡
 
 有任何疑問請在 GitHub 上提交 issue。
-

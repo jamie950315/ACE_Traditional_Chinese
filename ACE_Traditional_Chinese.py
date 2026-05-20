@@ -173,9 +173,10 @@ def convert_localization_files(out_path: str):
 
 # 主流程：解析檔案表、平行提取檔案、轉換 localization 檔案、重命名原始檔案
 async def main():
-    kspkg_path = r"C:\Program Files (x86)\Steam\steamapps\common\Assetto Corsa EVO\content.kspkg"
-    # 將解包目錄設定為遊戲安裝資料夾
-    out_path = r"C:\Program Files (x86)\Steam\steamapps\common\Assetto Corsa EVO"
+    # 預設以目前工作目錄作為遊戲安裝資料夾，避免寫死絕對路徑
+    base_path = pathlib.Path.cwd()
+    kspkg_path = str(base_path / "content.kspkg")
+    out_path = str(base_path)
     pck = KsPck(kspkg_path)
     pck.parse_file_tbl()
     start = time.perf_counter()
