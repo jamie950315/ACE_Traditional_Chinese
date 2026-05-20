@@ -40,9 +40,17 @@ pip install aiofiles numpy opencc-python-reimplemented
    `C:\Program Files (x86)\Steam\steamapps\common\Assetto Corsa EVO\`
 
 3. **執行工具：**  
-   在命令提示字元中進入工具所在資料夾後執行：
+   可直接執行（預設路徑為 Steam 預設安裝位置）：
    ```bash
    python ACE_Traditional_Chinese.py
+   ```
+   若遊戲安裝在非預設位置，請使用參數指定：
+   ```bash
+   python ACE_Traditional_Chinese.py --game-dir "D:\SteamLibrary\steamapps\common\Assetto Corsa EVO"
+   ```
+   也可分別指定 KsPkg 與輸出目錄：
+   ```bash
+   python ACE_Traditional_Chinese.py --kspkg-path "D:\Games\ACE\content.kspkg" --out-dir "D:\Games\ACE"
    ```
 
 4. **工具流程：**  
@@ -96,4 +104,3 @@ THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLI
 ## 聯絡
 
 有任何疑問請在 GitHub 上提交 issue。
-

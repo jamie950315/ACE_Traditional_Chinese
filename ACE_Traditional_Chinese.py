@@ -5,6 +5,7 @@ import enum
 import struct
 import pathlib
 import asyncio
+import argparse
 import aiofiles
 import numpy as np
 import os
@@ -171,11 +172,31 @@ def convert_localization_files(out_path: str):
         else:
             print(f"找不到檔案：{filename}")
 
+# 命令列參數
+def parse_args():
+    parser = argparse.ArgumentParser(description="解包 AC:Evo content.kspkg 並轉換繁中在地化檔案")
+    parser.add_argument("--game-dir", type=str, default=None, help="遊戲安裝目錄（含 content.kspkg）")
+    parser.add_argument("--kspkg-path", type=str, default=None, help="content.kspkg 完整檔案路徑")
+    parser.add_argument("--out-dir", type=str, default=None, help="解包輸出目錄（預設為 game-dir）")
+    return parser.parse_args()
+
+def resolve_paths(args):
+    default_game_dir = pathlib.Path(r"C:\Program Files (x86)\Steam\steamapps\common\Assetto Corsa EVO")
+    game_dir = pathlib.Path(args.game_dir) if args.game_dir else default_game_dir
+    kspkg_path = pathlib.Path(args.kspkg_path) if args.kspkg_path else (game_dir / "content.kspkg")
+    out_dir = pathlib.Path(args.out_dir) if args.out_dir else game_dir
+
+    if not kspkg_path.exists():
+        raise FileNotFoundError(
+            f"找不到 KsPkg 檔案：{kspkg_path}\n"
+            "請使用 --game-dir 或 --kspkg-path 指定正確位置。"
+        )
+    return str(kspkg_path), str(out_dir)
+
 # 主流程：解析檔案表、平行提取檔案、轉換 localization 檔案、重命名原始檔案
 async def main():
-    kspkg_path = r"C:\Program Files (x86)\Steam\steamapps\common\Assetto Corsa EVO\content.kspkg"
-    # 將解包目錄設定為遊戲安裝資料夾
-    out_path = r"C:\Program Files (x86)\Steam\steamapps\common\Assetto Corsa EVO"
+    args = parse_args()
+    kspkg_path, out_path = resolve_paths(args)
     pck = KsPck(kspkg_path)
     pck.parse_file_tbl()
     start = time.perf_counter()
